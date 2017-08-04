@@ -1,0 +1,91 @@
+############PRACTICA 1#################
+############1. -INTRODUCCION A R
+#Operaciones aritmeticas
+
+rm(a)
+a<-4
+b<-3
+suma<-a+b
+
+##Operaciones de Comparación
+a > b #mayor
+a < b #menor
+a >= b #mayor o igual
+a <= b #menor o igual
+a == b #igual
+a == 4 #igual a un valor
+a != b #diferente
+
+
+##Concepto de Función (ya estan definidas en R)
+x <- abs(-2.5) ##abs es la funcion del valor absoluto
+x
+help(abs)
+#Pedir ayuda en R
+help(abs)
+
+##para asignar valores a variables en R se usa una <-
+x <- "hola" ###variable tipo caracter
+z <- 6 
+
+##En este curso los objetos o variables que se utilizan son de tipo caracter y numérico
+
+ciudad <- "Toluca" #Una entrada
+nombres <- c("Karla", "Rodrigo", "Miguel", "Samuel") #Caracter y 4 entradas| La funcion c es para concatenar
+edad <- c(28,17,49,31) #numerico y 4 entradas
+
+##Se utiliza la función class para preguntar a R que tipo de variable es 
+class(nombres)
+class(edad)
+
+
+
+##Para crear una base de datos 
+#data.frame(renglones, columnas)
+
+base1 <- data.frame(nombres, edad)
+
+View(base1) #Ver la base de datos
+
+
+
+ls(base1) ##Ver lista de variables de base 1
+
+base1$edad #para ver los datos de una sola variable
+
+
+
+#####EJERCICIO:Crear una variable de nombre "sexo" con 4 entradas donde hombre es 1 y mujer es el valor 2
+##La primera entrada es mujer y las otras 3 son hombres
+# despues de crear esta variable generar una nueva base "base2" con tres variables (nombre, edad y sexo)
+
+sexo <- c(2,1,1,1)
+base2 <- data.frame(nombres,edad,sexo)
+
+##TABULADOS
+
+table(base2$sexo) #Para ver la frecuencia de una variable
+table(base2$edad)
+
+
+
+##PARA GRAFICAR
+palumnos <- c(40,120,60,80) ##alumnos fac economia
+etiq <- c("ACT", "ECO", "REI","NIB")
+help (pie)
+
+pie(palumnos)#graficadepie
+pie(palumnos,etiq)
+#pie(datos, etiquetas, titulo)
+#sub para poner subritulos
+#col para cambiar los colores
+#radius para cambiar el tamaño de la circunferencia
+#Para poner mas tonalidades de colores buscas la pagina colors in R (de la universidad de columbia)
+#Para poner las variables en el sentido de las manecillas del reloj se utiliza clockwise
+#lty es para el tipo de linea
+pie(palumnos, etiq, main= "Grafica de pie de 
+    la facultad de economía", 
+    sub = "Fuente: Facultad de economía",
+    col = c("deepskyblue1","red","pink","yellow"), radius=1.0,
+    clockwise=TRUE, lty=89)
+
