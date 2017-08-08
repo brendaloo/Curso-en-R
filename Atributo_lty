@@ -1,0 +1,12 @@
+#Atributo LTY
+Es un entero o caracter que controla el tipo de las líneas:
+
+1: solida,  
+2: quebrada,
+3: punteada,
+4: punto línea,
+5: línea larga-corta,
+6: dos líneas cortas, 
+
+O una secuencia de hasta 8 caracteres (entre "0" y "9") que especifica alternativamente la longitud en puntos o pixeles, de los elementos dibujados y los
+blancos; por ejemplo lty="44" tendra el mismo efecto que lty=2.
