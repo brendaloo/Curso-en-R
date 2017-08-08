@@ -1,0 +1,29 @@
+###PRACTICA 2
+
+#EJERCICIO
+#Crear 3 variables de 4 entradas. Las variables de Nombre:
+#facultad(economia,ingenieria, arquitectura, derecho)
+#licenciatura(actuaria, ingenieria civil, arquitectura, derecho)
+#calificacion alumnos ((6,4,10,8))
+#verificar con r que tipo de variables son
+##borrar las variables facultad y licenciatura
+#graficar con pie la bariable caleficación
+#incorporar los diversos argumentos utilizados en clase
+
+facultad <- c("economia","ingenieria","arquitectura","derecho")
+licenciatura <- c("actuaria","ing_civil","arquitectura","derecho")
+calif_alumnos <- c(6,4,10,8)
+class(facultad)
+class(licenciatura)
+class(calif_alumnos)
+rm(facultad,licenciatura)
+
+
+##grafica
+pie (calif_alumnos,calif_alumnos, main =
+       "Gráfica de pie de calificaciones",
+     sub="Fuente: facultad de economía"
+     ,col = c("cornflowerblue", "coral", "pink", "khaki1"),
+     radius = 1.1,
+     clockwise = FALSE,
+     lty = 10)
