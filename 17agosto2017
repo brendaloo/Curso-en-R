@@ -1,0 +1,85 @@
+############ dia 5 
+
+########################################################
+temporal <- tempfile()
+download.file("http://www.beta.inegi.org.mx/contenidos/proyectos/enchogares/modulos/mti/2015/microdatos/mti2015_bases_conapo_dbf.zip",temporal)
+files = unzip(temporal, list=TRUE)$Name
+unzip(temporal, files=files[grepl("dbf",files)])
+library (foreign)
+SDEMT117 <- data.frame(read.dbf("sdemt117.dbf"))
+library (q3.1  Etiquetar CTAEGORÍAS en otra variable
+SDEMT117$POSOCU1 <- factor(SDEMT117$POS_OCU,levels = c(1,2,3,4,5)
+                           ,labels = c("Trabajadores subordinados", "empleadores", 
+                                       "Trabajadores por cuenta propia", "Trabajadores sin pago", 
+                                       "no especificado"))uestionr)
+wtd.table(SDEMT117$POS_OCU,na.show = TRUE)
+wtd.table(SDEMT117$POS_OCU,weights=SDEMT117$FAC,na.show = TRUE)
+wtd.table (SDEMT117$ENT,weights=SDEMT117$FAC,na.show = TRUE)
+####################################################################################################
+#3. Etiquetar
+
+#
+wtd.table (SDEMT117$POSOCU1)
+wtd.table (SDEMT117$POSOCU1, weights = SDEMT117$FAC)
+
+wtd.table(SDEMT215$SEXO)
+
+################# recodificar el nombre de la variable 
+install.packages("plyr")
+library(plyr)
+rename(SDEMT117$POS_OCU, ("ww"))
+#3.4 Documentacion
+#https://stat.ethz.ch/R-manual/R-devel/library/base/html/factor.html
+
+
+
+####################################################################################################
+#4. Recodificar 
+
+#4.1  Recodificion de variables numericas (rangos)
+wtd.table(SDEMT117$EDA)
+
+#Metodo 1
+class(SDEMT117$EDA)
+attach(SDEMT117)
+SDEMT117$GPOEDAD[as.numeric(EDA) >= 0 & as.numeric(EDA)<=14] <- 1
+SDEMT117$GPOEDAD[as.numeric(EDA) >= 15 & as.numeric(EDA)<=29] <- 2
+SDEMT117$GPOEDAD[as.numeric(EDA) >= 30 & as.numeric(EDA)<=59] <- 3
+SDEMT117$GPOEDAD[as.numeric(EDA) >= 60 & as.numeric(EDA)<=99] <- 4
+SDEMT117$GPOEDAD <- factor(SDEMT117$GPOEDAD,levels = c(1,2,3,4)
+                           ,labels = c("nIÑ@S", "jóvenes", 
+                                       "adultos", "adultos mayores"))
+wtd.table(SDEMT117$POSOCU1, SDEMT117$GPOEDAD)
+tabla1 <- wtd.table(SDEMT117$POSOCU1, SDEMT117$GPOEDAD, weights = SDEMT117$FAC)
+
+#                                nIÑ@S  jovenes  adultos adultos mayores
+#Trabajadores subordinados         74007 11265650 22376761         2145514
+#empleadores                           0   173103  1766626          475885
+#Trabajadores por cuenta propia     5162  1269599  7566906         2571322
+#Trabajadores sin pago            108522  1248770   960244          232414
+#no especificado                       0        0        0               0
+
+write.csv (tabla1, "C:\\Users\\Sala-I12\\Desktop\\tabla1.csv")
+
+
+#4.1  Recodificion de variables tipo caracter
+
+SDEMT117$VALIDO[as.character(SDEMT117$R_DEF)!="00"] <- "Entrevista incompleta"
+SDEMT117$VALIDO[as.character(SDEMT117$R_DEF)=="00"] <- "Entrevista completa"
+wtd.table(SDEMT117$VALIDO, weights = SDEMT117$FAC)
+
+
+#4.1  Documentacion
+#https://stat.ethz.ch/R-manual/R-devel/library/base/html/ifelse.html
+#http://www.statmethods.net/management/variables.html
+
+
+
+
+####################################################################################################
+#5. Subconjunto de datos
+
+#5.1  Seleccionando variables de interes
+
+var<-c("SEX", "GPOEDAD", "CLASE1","POSOCU1")
+BASE2SDEM <- SDEMT1
