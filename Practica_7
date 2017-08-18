@@ -1,0 +1,58 @@
+####################PRACTICA 7###########################
+
+
+################### MANERA CORTA ###############
+
+temporal<-tempfile()
+download.file("http://www.beta.inegi.org.mx/contenidos/proyectos/enchogares/modulos/mti/2015/microdatos/mti2015_bases_conapo_dbf.zip",temporal)
+files=unzip(temporal,list=TRUE)$Name
+unzip(temporal,files=files[grepl("dbf",files)])
+library(foreign)
+# mti2015 <- data.frame(read.dbf("semt117.dbf"))
+files
+mti15 <- data.frame(read.dbf( "mti2015_05_17_sdem_precodificado.DBF"))
+
+mti15$RAMA2 [mti15$RAMA == 1] <- 1
+mti15$RAMA2 [mti15$RAMA == 2 | mti15$RAMA ==3] <- 2
+mti15$RAMA2 [mti15$RAMA == 4 | mti15$RAMA ==5] <- 3
+mti15$RAMA2 [mti15$RAMA == 6 | mti15$RAMA ==7] <- 4
+
+table(mti15$RAMA2)
+table(mti15$EDA)
+
+##EJERCICIO 
+#Recodificar la variable EDA en una nueva variable que se llame GPOEDA y etiquetarla, 
+#esta recofificación debe quedar en 4 lineas del script. La recodificación es la siguiente
+#5,6,7 ->1 <- niñ@s
+#8,9,10,11, ->2 <- Preado
+#12,13,14 -> 3 <-ado
+#15,16,17 ->4 <- joven
+#Una vez que hayan realizado el ejercicio generar una tabla con datos expandidos y exportarla a excel
+#(Primero a caracter y luego a numeric)
+
+
+mti15$EDA <- as.numeric(as.character(mti15$EDA))
+                                                                 
+table(mti15$EDA)
+
+mti15$GPOEDA [mti15$EDA >=5 & mti15$EDA <=7] <- 1
+mti15$GPOEDA [mti15$EDA >=8 & mti15$EDA <=11] <- 2
+mti15$GPOEDA [mti15$EDA >=12 & mti15$EDA <=14] <- 3
+mti15$GPOEDA [mti15$EDA >=15 & mti15$EDA <=17] <- 4
+
+
+mti15$GPOEDA <- factor(mti15$GPOEDA ,levels=c(1,2,3,4),labels=c("Niñ@s", "Preado","Ado","Joven"))
+                                                                 
+table(mti15$EDA)
+table(mti15$GPOEDA)
+
+install.packages("questionr")
+require (questionr)
+t <-wtd.table(mti15$GPOEDA,weights= mti15$FAC_MTI)
+write.csv(t, file="Practica7.csv")
+
+
+##TAREA##
+#Con csv abrir varios archivos en uno mismo libro
+#Funcion XLS
+# Hacer una grafica de barras de la variable GPOEDA y exportarla a un PDF y enviarla al correo
