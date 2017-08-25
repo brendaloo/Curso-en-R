@@ -1,0 +1,10 @@
+###EJERCICIO_1
+y <- c(8.7,7.5,9,8,7,6.4,8,7.8,9,8.4)#PROMEDIO
+x <- c(1,2,3,1,2,3,4,2,6,5)#CUANTAS VECES A LA SEMANA CONSUME
+base1 <-data.frame(x,y)
+
+
+
+
+plot(base1[,1], base1[,2], main="Relacion promedio- consumo semanal de alcohol")
+abline(lm(base1[,2]~base1[,2]), col="red")
