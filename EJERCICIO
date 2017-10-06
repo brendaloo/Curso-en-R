@@ -1,0 +1,33 @@
+
+
+#X= Ingreso Disponible Personal
+#Y= Gasto de consumo personal 
+
+x<-c(1839,1844,1831,1881,1883,1910,1969,2016,2126,2239,2336,2404,2487,2535,2595)
+y <-c(1673,1688,1666,1735,1749,1756,1815,1867,1948,2048,2128,2165,2257,2316,2324)
+
+###Por formulas
+beta1 <- cor(y,x)*(sd(y,na.rm=FALSE)/sd(x,na.rm=FALSE))
+beta0 <-mean(y)-beta1*mean(x)
+
+###Por minimos cuadrados
+
+sxy <- sum(x*y)-((sum(x)*sum(y))/15)
+sxx <- sum(x^2)-(sum(x))^2/15
+
+b1 <- sxy/sxx
+bo <- (sum(y)-sum(b1*x))/15
+
+###Por lm
+
+modelo <- lm(y~x)
+summary(modelo)
+
+
+##Sacar la desviacion
+SSE <- sum((y-(bo+b1*x))^2)
+scuadrada <- SSE/15-2
+
+##Sacar r cuadrada
+SST <-sum(y^2)-sum(y)^2/15
+rcuadrada <-1-(SSE/SST)
