@@ -21,3 +21,10 @@ califtotal <-c(4,3.5,3.5,3.5,3.5,3.5,3,3,2.5,2)
 
 ##c) Elimine cualquiera de las variables independientes que no sea significativa para la ecuacion 
 ## de regresión estimada ¿Cuál es la ecuacion de regresión estimada que recomienda compare las r2 de los modelos 
+
+base1 <- data.frame(operacion, uso, gama, califtotal)
+
+cor(base1,use="everything", method="pearson")
+
+modcalif <- lm(califtotal~operacion + uso + gama)
+summary(modcalif)
