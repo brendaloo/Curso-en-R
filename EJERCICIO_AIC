@@ -1,0 +1,75 @@
+###Comparación de Modelos
+
+## Pretendemos seleccionar el mejor conjunto de predictores
+## En este caso para la aplicacion del mrm tenemos 2 variables independientes (calidad y capacidad)
+## Por lo que se propone comparar tres modelos con la finalidad de aplicar el principio de  parsimonia,
+## conocer variables independientes innecesarias, evitar multicolinealidad, es decir, que se tienen muchas
+## variables intentando explicar el modelo
+
+## Ante estas variabes se pueden comparar tres modelos
+#1) precio ~ capacidad
+#2) precio ~ calidad
+#3) precio ~ calidad + capacidad
+
+
+
+##¿Como seleccionamos el mejor modelo?
+# El problema de utilizar R2 para comparar modelos es en muhos casos al añadir nuevas variables al modelo,
+# esta medoda crece. Si estamos decidiendo cual de todos los modelos ajusta mejor a los datos, 
+# el modelo con mas predictores siempre será el mejor ajustando.
+## Para evitar esto se utiliza el AIC, una medida de ajuste que penaliza el modelo por tener más variables. 
+# Viene definido por:
+# AIC=(n)(log(SCR/n))+2k
+# SCR= Suma de cuadrados residuales
+# n es el numero de casos en el modelo
+# k es el numero de variables independientes
+
+##El criterio que se utiliza para el AIC es elegir el modelo que tenga el menor valor de AIC, es decir,
+# esperamos un AIC mas pequeño
+
+# El AIC nos va a ayudar a decidir sobre la comparación de los modelos.
+
+## El metodo más recomendado es el metodo step by step
+# Para R se utiliza la funcion step()
+# Adentro del metodo de step by step hay 3 modalidades:
+
+#1) forward... parte del coeficiente Bo y de ahi va probando 
+# las variables independientes para ver cual es la que aporta mas al modelo.
+#2) backward... R empieza con todas las var indep y estudia si el AIc baja cuando hay cambios en las variables.
+#3) both... empieza como el forward la diferencia es que se realizan test para conocer el predictor menos util.
+
+## El metodo mas recomendable es el backward porque tiene un efecto represor que permite probar cuando una var tiene influencia 
+#solo si otra var se mantiene constante vamos a calcular el modelo con  las 2 variables independientes.
+
+precio <- c(190,219,249,249,250,340,289,395,439,525)
+capa <- c(4330,5500,5550,4700,5200,5500,4700,5500,5800,5000)
+calidad <-c(2,3,4,3,4,4,4,5,5,5)
+moch <- data.frame (precio, capa, calidad)
+
+mod1 <- lm(precio ~ capa + calidad, data=moch)
+
+summary(mod1)
+
+## En los coeficientes observamos el estadistico T que solo tenemos significativa la var calidad
+## Tenemos un error estandar residual de 58.35 que es une rror alto
+## Tambien observamos la r ajustada (por mrm) que tenemos una r ajustada de .7, lo que explica que
+# el 70 porciento de la variabilidad del modelo
+## Observamos que tenemos un estadistico F como un buen valor  y p value menos a .05 que implica que 
+# este modelo es mejor que el modelo basico, ahora vamos autilizar la funcion step() para ver si podemos 
+# mejorar el ajuste del modelo
+
+step(mod1, direction="backward")
+
+## Aqui podemos ver que el metodo step analizo 2 modelos
+#1) precio ~ capa + calidad con un AIC =83.76
+#2) precio ~ calidad con un AIC=83.51
+
+###Ahora vamos a probar con el metodo both
+step(mod1, direction="both")
+
+##Tenemos un resultado igual al de backward por la forma que se construye este metodo ahora con el metodo de forward
+
+step(mod1, direction="forward")
+
+##En este solo muestra el modelo completo porque inicia haciendopruebas con el modelo nulo
+# y solo deja el modelo completo porque es el que mayor AIC muestra...
