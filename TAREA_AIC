@@ -1,0 +1,10 @@
+
+##Con esta base de datos hacer el ejercicio
+# var dependiente fertilidad
+## escoger otras 3 como indeoendientes
+## aplicar el modelo y explicar el summary del modelo completo
+## Una vez que hagas la descripcion del modelo completo aplicar el creterio AIC para comparar los modelos posibles de su modelo completo
+#Ya que hayas elegido un modelo co base en el AIC aplicarlo y describir una funcion summary de su mejor modelo segun AIC
+help("datasets")
+library (help= "datasets")
+require(datasets); data(swiss); ?swiss
