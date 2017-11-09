@@ -1,0 +1,22 @@
+## Medicion estandarizada de la fecundidad e indicadores socioeconomicos para cada una de las 47 provincias 
+# frncesas hablantes de Suiza alrededor de 1888.
+
+requirle(stats)
+base <- data.frame(swiss)
+
+## Analisis exploratorio
+names(base)
+pairs(base)
+cor(base)
+
+
+##Propuesta Modelo de regresion multiple con base en el analisis exploratorio
+## regresion1 <-lm(Infant.Mortality ~ Fertility, data= base)
+
+##Modelo propuesto anteriormente
+nulo <- lm(Fertility ~ 1, data = base)
+summary(nulo)
+completo <- lm(Fertility ~ ., data=base) #lm(Fertility ~ Infant.mortality + education + examination + agriculture + catholic)
+step(nulo, scope=list(lower=nulo, upper=completo), direction = "forward")
+summary(completo)
+help(step)
