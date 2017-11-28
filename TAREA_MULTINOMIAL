@@ -1,0 +1,15 @@
+###EJERCICIO niños y niñas de 5 a 17 años de zonas rurales (modulo de trabajo infantil)
+library(haven)
+solorural <- read_sav("C:/Users/SALA-D7/Downloads/solorural.sav")
+
+##vardependiente Pregunta 131. Persona para la que trabaja (TPER) : 1)familiar, 2)no familiar, 3)cuenta propia
+
+##variables independientes:
+#1) sexo: 1 hombre 2 mujer (127 SEX )
+#2) grupos de edad: 1)5 a9, 2)10 a 13, 3)14 a 17 (edad del niño) (108 EDA1)
+#3) sexo jefe del hogar: 1 hombre 2 mujer (36 SEX_JEFE)
+#4) tamaño del hogar: 1)1 a 3 personas, 2)4 a 5, 3)6 a 7, 4)8 y mas personas (32 TAM_HOG )
+#5) Ocupacion jefe del hogar: 1)ocupado 2)desocupado (34 OCU_JEFE )
+#6) tipo de apoyo recibido: 1)beca para estudiar, 2)programa gobierno,3)ayuda familiar, 4)otro tipo de ayuda, 5)no recibe (112 T_APO)
+
+##Todos los 1 es la categoria de referencia, es con la que se va a contrastar
